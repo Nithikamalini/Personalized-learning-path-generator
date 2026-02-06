@@ -10,14 +10,17 @@ export default function ProfileInfo({ onProfileSubmit }) {
     gender: "",
     nationality: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onProfileSubmit(form);
+    setLoading(true);
+    await onProfileSubmit(form);
+    setLoading(false);
   };
 
   return (
@@ -48,7 +51,9 @@ export default function ProfileInfo({ onProfileSubmit }) {
         <label>Nationality:</label>
         <input name="nationality" type="text" value={form.nationality} onChange={handleChange} required />
 
-        <button type="submit">Continue</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Saving..." : "Continue"}
+        </button>
       </form>
     </div>
   );
