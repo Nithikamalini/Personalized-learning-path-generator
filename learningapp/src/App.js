@@ -274,8 +274,15 @@ function App() {
         .get(`${API_URL}/api/getPath/${userId}`)
         .then((res) => {
           if (res.data) {
-            setSkills(res.data.skills || skills);
-            setGoal(res.data.goal || goal);
+            setSkills(res.data.skills || {
+              python: 0,
+              sql: 0,
+              ds: 0,
+              javascript: 0,
+              java: 0,
+              mongodb: 0,
+            });
+            setGoal(res.data.goal || "Set your goal");
             setPath(res.data.path || []);
           }
         })
